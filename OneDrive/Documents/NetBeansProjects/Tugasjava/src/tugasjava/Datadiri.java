@@ -1,6 +1,6 @@
 package tugasjava;
 
-
+//Data diri
 public class Datadiri {
   public void Data(){
     

@@ -1,7 +1,6 @@
 package tugasjava;
 
 //class mobil mewarisi kendaraan
-
 public class Mobil extends Kendaraan {
     public Mobil(String merk) {
         super("Mobil Sport", merk);
