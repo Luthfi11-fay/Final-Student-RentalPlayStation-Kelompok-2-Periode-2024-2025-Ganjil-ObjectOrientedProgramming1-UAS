@@ -37,11 +37,11 @@ public class Buku {
         return deskripsi;
     }
     
-    public double getHarga() {  // Diubah dari setHarga ke getHarga
+    public double getHarga() {  
         return harga;
     }
     
-    public double getDenda() {  // Diubah dari setDenda ke getDenda
+    public double getDenda() {  
         return denda;
     }
 
