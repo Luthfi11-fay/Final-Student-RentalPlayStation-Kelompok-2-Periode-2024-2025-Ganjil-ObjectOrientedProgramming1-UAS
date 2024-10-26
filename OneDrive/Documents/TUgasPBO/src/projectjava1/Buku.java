@@ -1,52 +1,13 @@
 package projectjava1;
 
-public class Buku {
-    private final String title;
-    private final String author;
-    private boolean tersedia;
-    private final String deskripsi;
-    private final double harga;
-    private final double denda;
-  
-    // Constructor
+public record Buku(String title, String author, String deskripsi, double harga, double denda, boolean tersedia) {
+    // Konstruktor 
     public Buku(String title, String author, String deskripsi, double harga, double denda) {
-        this.title = title;
-        this.author = author;
-        this.tersedia = true; // Default: Book is available when created
-        this.deskripsi = deskripsi;
-        this.harga = harga;
-        this.denda = denda;
+        this(title, author, deskripsi, harga, denda, true);
     }
 
-    // Getter for title
-    public String getTitle() {
-        return title;
-    }
-
-    // Getter for author
-    public String getAuthor() {
-        return author;
-    }
-
-    // Getter untuk tersedia
-    public boolean tersedia() {
-        return tersedia;
-    }
-   
-    public String getDeskripsi() {
-        return deskripsi;
-    }
-    
-    public double getHarga() {  
-        return harga;
-    }
-    
-    public double getDenda() {  
-        return denda;
-    }
-
-    // Setter untuk Tersedia
-    public void setTersedia(boolean tersedia) {
-        this.tersedia = tersedia;
+    // Setter untuk mengubah status ketersediaan buku
+    public Buku setTersedia(boolean tersedia) {
+        return new Buku(title, author, deskripsi, harga, denda, tersedia);
     }
 }

@@ -4,8 +4,7 @@ import projectjava1.Buku;
 import projectjava1.Lecture;
 import projectjava1.Mahasiswa;
 
-
-public class Main{    
+public class Main {    
     public static void main(String[] args) {
         // daftar buku menggunakan list array
         Buku[] daftarBuku = {
@@ -25,7 +24,7 @@ public class Main{
         Mahasiswa mhs1 = new Mahasiswa("Luthfi Fathillah", 1001, 12345, 0, 
                                      "Jl. Sukajdi No. 123", 0.0);
         Mahasiswa mhs2 = new Mahasiswa("Luthfi Fathillah", 1002, 12346, 0, 
-                                     "Jl.Arab saudi  No. 45", 0.0);
+                                     "Jl.Arab saudi No. 45", 0.0);
         
         Lecture dosen1 = new Lecture("M.ikhwan fathulloh,S.kom ", 2001, 0, 101, 
                                    "Jl. gatau No. 78", 0.0);
@@ -35,16 +34,15 @@ public class Main{
         // Menampilkan daftar buku awal
         System.out.println("============= DAFTAR BUKU PERPUSTAKAAN =============");
         for (Buku buku : daftarBuku) {
-            System.out.println("\nJudul: " + buku.getTitle());
-            System.out.println("Pengarang: " + buku.getAuthor());
-            System.out.println("Deskripsi: " + buku.getDeskripsi());
-            System.out.println("Harga: Rp " + String.format("%,.2f", buku.getHarga()));
-            System.out.println("Denda per hari: Rp " + String.format("%,.2f", buku.getDenda()));
+            System.out.println("\nJudul: " + buku.title());
+            System.out.println("Pengarang: " + buku.author());
+            System.out.println("Deskripsi: " + buku.deskripsi());
+            System.out.println("Harga: Rp " + String.format("%,.2f", buku.harga()));
+            System.out.println("Denda per hari: Rp " + String.format("%,.2f", buku.denda()));
             System.out.println("Status: " + (buku.tersedia() ? "Tersedia" : "Dipinjam"));
             System.out.println("------------------------------------------------");
         }
 
-        
         System.out.println("\n============= PEMINJAMAN BUKU =============");
         
         // Peminjaman oleh mahasiswa
@@ -63,7 +61,7 @@ public class Main{
         // Status buku setelah peminjaman
         System.out.println("\n========= STATUS BUKU SETELAH PEMINJAMAN ==========");
         for (Buku buku : daftarBuku) {
-            System.out.println(buku.getTitle() + ": " + 
+            System.out.println(buku.title() + ": " + 
                 (buku.tersedia() ? "Tersedia" : "Dipinjam"));
         }
 
@@ -72,43 +70,43 @@ public class Main{
         
         // Informasi Mahasiswa
         System.out.println("\nInformasi Mahasiswa 1:");
-        System.out.println("Nama: " + mhs1.getName());
-        System.out.println("NIM: " + mhs1.getNim());
-        System.out.println("ID Anggota: " + mhs1.getMemberId());
-        System.out.println("Alamat: " + mhs1.getAlamat());
+        System.out.println("Nama: " + mhs1.name());
+        System.out.println("NIM: " + mhs1.Nim());
+        System.out.println("ID Anggota: " + mhs1.memberId());
+        System.out.println("Alamat: " + mhs1.alamat());
 
         System.out.println("\nInformasi Mahasiswa 2:");
-        System.out.println("Nama: " + mhs2.getName());
-        System.out.println("NIM: " + mhs2.getNim());
-        System.out.println("ID Anggota: " + mhs2.getMemberId());
-        System.out.println("Alamat: " + mhs2.getAlamat());
+        System.out.println("Nama: " + mhs2.name());
+        System.out.println("NIM: " + mhs2.Nim());
+        System.out.println("ID Anggota: " + mhs2.memberId());
+        System.out.println("Alamat: " + mhs2.alamat());
 
         // Informasi Dosen
         System.out.println("\nInformasi Dosen 1:");
-        System.out.println("Nama: " + dosen1.getName());
-        System.out.println("Kode Dosen: " + dosen1.getCodeDosen());
-        System.out.println("ID Anggota: " + dosen1.getMemberId());
-        System.out.println("Alamat: " + dosen1.getAlamat());
+        System.out.println("Nama: " + dosen1.name());
+        System.out.println("Kode Dosen: " + dosen1.codedosen());
+        System.out.println("ID Anggota: " + dosen1.memberId());
+        System.out.println("Alamat: " + dosen1.alamat());
 
         System.out.println("\nInformasi Dosen 2:");
-        System.out.println("Nama: " + dosen2.getName());
-        System.out.println("Kode Dosen: " + dosen2.getCodeDosen());
-        System.out.println("ID Anggota: " + dosen2.getMemberId());
-        System.out.println("Alamat: " + dosen2.getAlamat());
+        System.out.println("Nama: " + dosen2.name());
+        System.out.println("Kode Dosen: " + dosen2.codedosen());
+        System.out.println("ID Anggota: " + dosen2.memberId());
+        System.out.println("Alamat: " + dosen2.alamat());
 
-        // State  akhir perpustakaan
+        // State akhir perpustakaan
         System.out.println("\n============= STATUS AKHIR PERPUSTAKAAN =============");
         System.out.println("\nBuku yang tersedia:");
         for (Buku buku : daftarBuku) {
             if (buku.tersedia()) {
-                System.out.println("- " + buku.getTitle());
+                System.out.println("- " + buku.title());
             }
         }
 
         System.out.println("\nBuku yang sedang dipinjam:");
         for (Buku buku : daftarBuku) {
             if (!buku.tersedia()) {
-                System.out.println("- " + buku.getTitle());
+                System.out.println("- " + buku.title());
             }
         }
     }
