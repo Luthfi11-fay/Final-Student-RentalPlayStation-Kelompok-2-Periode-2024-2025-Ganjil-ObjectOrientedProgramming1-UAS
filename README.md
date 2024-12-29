@@ -9,7 +9,9 @@ Kelompok
 Kelompok: 2
 
 Proyek: Sewa Playstation
+
 Anggota:
+
 Ketua: Luthfi Fathillah
 
 Anggota 1: Lutfhi Febrian noor
