@@ -2,8 +2,10 @@
 
 Mata Kuliah: Pemrograman Berorientasi Obyek 1
 Dosen Pengampu: Muhammad Ikhwan Fathulloh
+
 Kelompok
 Kelompok: 2
+
 Proyek: Sewa Playstation
 Anggota:
 Ketua: Luthfi Fathillah
