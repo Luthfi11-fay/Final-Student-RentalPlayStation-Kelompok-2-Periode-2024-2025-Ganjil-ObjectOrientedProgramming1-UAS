@@ -78,7 +78,6 @@ public class PS5 extends Console {
         this.rentedTo.set(customer);
     }
 }
-```
 
 ### 3. Polimorfisme (Polymorphism)
 - Jenis konsol ditangani secara polimorfik melalui kelas dasar `Console`
