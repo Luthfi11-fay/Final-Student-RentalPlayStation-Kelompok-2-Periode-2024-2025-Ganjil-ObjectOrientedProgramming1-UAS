@@ -56,7 +56,7 @@ public class PS5 extends Console {
 - Properti dilindungi dan diakses melalui metode properti JavaFX
 - Operasi database yang aman dienkapsulasi dalam kelas handler terpisah
 - berikut ini adalah contoh codenya
-- public class Console {
+  ```public class Console {
     // Data/variable private
     private IntegerProperty hourlyRate;
     private StringProperty type;
@@ -78,13 +78,14 @@ public class PS5 extends Console {
         this.rentedTo.set(customer);
     }
 }
+```
 
 ### 3. Polimorfisme (Polymorphism)
 - Jenis konsol ditangani secara polimorfik melalui kelas dasar `Console`
 - Berbagai jenis konsol dapat dikelola secara seragam sambil mempertahankan perilaku spesifik mereka
 - Penggantian metode di subclass konsol untuk fungsionalitas spesifik
 - berikut ini adalah contoh codenya
-- // Metode abstract di kelas induk
+``` // Metode abstract di kelas induk
 public abstract class Console {
     public abstract void calculateRentalCost();
     public abstract void checkMaintenance();
@@ -114,7 +115,7 @@ public class PS4 extends Console {
         // Implementasi pemeriksaan maintenance PS4
     }
 }
-
+```
 ### 4. Abstraksi (Abstraction)
 - Kelas abstrak `Console` mendefinisikan template untuk semua jenis konsol
 - Metode abstrak `calculateRentalCost()` dan `checkMaintenance()` memastikan implementasi yang konsisten di semua jenis konsol
@@ -150,3 +151,4 @@ public class RentalOperations {
         // Implementasi detail database
     }
 }
+```
