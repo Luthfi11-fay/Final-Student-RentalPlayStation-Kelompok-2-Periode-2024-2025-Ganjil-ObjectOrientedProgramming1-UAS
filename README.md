@@ -1,7 +1,7 @@
 # Sistem Rental PlayStation
 
 ## Gambaran Proyek
-Aplikasi berbasis JavaFX untuk mengelola rental konsol PlayStation, dikembangkan oleh Tim 2. Sistem ini memungkinkan bisnis rental untuk melacak ketersediaan konsol, mengelola penyewaan, dan menghasilkan laporan.
+Aplikasi berbasis JavaFX untuk mengelola rental konsol PlayStation, dikembangkan oleh kelompok 2. Sistem ini memungkinkan bisnis rental untuk melacak ketersediaan konsol, mengelola penyewaan, dan menghasilkan laporan.
 
 ## Anggota Tim
 - **Ketua Tim:** Luthfi Fathillah
