@@ -120,7 +120,7 @@ public class PS4 extends Console {
 - Metode abstrak `calculateRentalCost()` dan `checkMaintenance()` memastikan implementasi yang konsisten di semua jenis konsol
 - Desain berbasis antarmuka untuk operasi rental
 - berikut ini adalah contoh codenya
-- // Kelas abstrak dengan metode abstrak
+``` // Kelas abstrak dengan metode abstrak
 public abstract class Console {
     // Metode abstrak yang harus diimplementasikan oleh kelas turunan
     public abstract void calculateRentalCost();
