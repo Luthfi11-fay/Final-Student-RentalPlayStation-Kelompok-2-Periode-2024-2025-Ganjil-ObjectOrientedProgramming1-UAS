@@ -25,7 +25,7 @@ Aplikasi berbasis JavaFX untuk mengelola rental konsol PlayStation, dikembangkan
 - Hierarki konsol menunjukkan pewarisan dengan kelas dasar `Console` yang diperluas oleh kelas `PS3`, `PS4`, dan `PS5`
 - Setiap jenis konsol mewarisi properti dan metode umum sambil mempertahankan tarif per jam yang spesifik
 - Contoh codenya
-- // Kelas induk (parent class)
+``` // Kelas induk (parent class)
 public abstract class Console {
     protected IntegerProperty hourlyRate;
     protected StringProperty type;
@@ -50,7 +50,7 @@ public class PS5 extends Console {
         super("PS5", 15000, room); // Mewarisi konstruktor dari kelas Console
     }
 }
-
+```
 ### 2. Enkapsulasi (Encapsulation)
 - Enkapsulasi data melalui field private dan getter/setter publik
 - Properti dilindungi dan diakses melalui metode properti JavaFX
