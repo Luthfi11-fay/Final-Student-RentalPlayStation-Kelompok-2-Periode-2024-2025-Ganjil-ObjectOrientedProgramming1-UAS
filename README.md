@@ -80,38 +80,20 @@ public class PS5 extends Console {
 }
 
 ### 3. Polimorfisme (Polymorphism)
-- Jenis konsol ditangani secara polimorfik melalui kelas dasar `Console`
-- Berbagai jenis konsol dapat dikelola secara seragam sambil mempertahankan perilaku spesifik mereka
-- Penggantian metode di subclass konsol untuk fungsionalitas spesifik
-- berikut ini adalah contoh codenya
-``` // Metode abstract di kelas induk
-public abstract class Console {
-    public abstract void calculateRentalCost();
-    public abstract void checkMaintenance();
-}
-
-// Implementasi berbeda di setiap kelas turunan
-public class PS3 extends Console {
-    @Override
-    public void calculateRentalCost() {
-        // Implementasi khusus untuk PS3
-    }
-    
-    @Override
-    public void checkMaintenance() {
-        // Implementasi pemeriksaan maintenance PS3
-    }
-}
-
-public class PS4 extends Console {
-    @Override
-    public void calculateRentalCost() {
-        // Implementasi khusus untuk PS4
-    }
-    
-    @Override
-    public void checkMaintenance() {
-        // Implementasi pemeriksaan maintenance PS4
+Satu variable console bisa menyimpan objek yang berbeda-beda
+Meskipun tipe variable-nya Console, bisa menampung objek turunannya
+Ini memungkinkan fleksibilitas dalam menangani berbagai jenis PlayStation
+berikut ini adalah contoh codenya
+``` public class RentalOperations {
+    public List<Console> getAllConsoles() {
+        List<Console> consoles = new ArrayList<>();
+        // ...
+        Console console;
+        switch (type) {
+            case "PS3": console = new PS3(room); break;
+            case "PS4": console = new PS4(room); break;
+            case "PS5": console = new PS5(room); break;
+        }
     }
 }
 ```
