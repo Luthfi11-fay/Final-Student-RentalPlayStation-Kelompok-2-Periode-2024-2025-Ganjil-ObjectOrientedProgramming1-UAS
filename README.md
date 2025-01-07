@@ -22,8 +22,8 @@ Aplikasi berbasis JavaFX untuk mengelola rental konsol PlayStation, dikembangkan
 ## Implementasi Prinsip Pemrograman Berorientasi Objek
 
 ### 1. Pewarisan (Inheritance)
-- Hierarki konsol menunjukkan pewarisan dengan kelas dasar `Console` yang diperluas oleh kelas `PS3`, `PS4`, dan `PS5`
-- Setiap jenis konsol mewarisi properti dan metode umum sambil mempertahankan tarif per jam yang spesifik
+ Hierarki konsol menunjukkan pewarisan dengan kelas dasar `Console` yang diperluas oleh kelas `PS3`, `PS4`, dan `PS5`
+ Setiap jenis konsol mewarisi properti dan metode umum sambil mempertahankan tarif per jam yang spesifik
 - Contoh codenya
 ``` // Kelas induk (parent class)
 public abstract class Console {
@@ -52,9 +52,9 @@ public class PS5 extends Console {
 }
 ```
 ### 2. Enkapsulasi (Encapsulation)
-- Enkapsulasi data melalui field private dan getter/setter publik
-- Properti dilindungi dan diakses melalui metode properti JavaFX
-- Operasi database yang aman dienkapsulasi dalam kelas handler terpisah
+ Enkapsulasi data melalui field private dan getter/setter publik
+ Properti dilindungi dan diakses melalui metode properti JavaFX
+ Operasi database yang aman dienkapsulasi dalam kelas handler terpisah
 - berikut ini adalah contoh codenya
   ```public class Console {
     // Data/variable private
@@ -83,7 +83,7 @@ public class PS5 extends Console {
 Satu variable console bisa menyimpan objek yang berbeda-beda
 Meskipun tipe variable-nya Console, bisa menampung objek turunannya
 Ini memungkinkan fleksibilitas dalam menangani berbagai jenis PlayStation
-berikut ini adalah contoh codenya
+- berikut ini adalah contoh codenya
 ``` public class RentalOperations {
     public List<Console> getAllConsoles() {
         List<Console> consoles = new ArrayList<>();
@@ -98,10 +98,10 @@ berikut ini adalah contoh codenya
 }
 ```
 ### 4. Abstraksi (Abstraction)
-- Kelas abstrak `Console` mendefinisikan template untuk semua jenis konsol
-- Metode abstrak `calculateRentalCost()` dan `checkMaintenance()` memastikan implementasi yang konsisten di semua jenis konsol
-- Desain berbasis antarmuka untuk operasi rental
-- berikut ini adalah contoh codenya
+ Kelas abstrak `Console` mendefinisikan template untuk semua jenis konsol
+ Metode abstrak `calculateRentalCost()` dan `checkMaintenance()` memastikan implementasi yang konsisten di semua jenis konsol
+ Desain berbasis antarmuka untuk operasi rental
+ berikut ini adalah contoh codenya
 ``` // Kelas abstrak dengan metode abstrak
 public abstract class Console {
     // Metode abstrak yang harus diimplementasikan oleh kelas turunan
