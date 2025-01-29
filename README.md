@@ -5,8 +5,11 @@ Aplikasi berbasis JavaFX untuk mengelola rental konsol PlayStation, dikembangkan
 
 ## Anggota Tim
 - **Ketua Tim:** Luthfi Fathillah
+- **NPM:**23552011209
 - **Anggota 1:** Lutfhi Febrian noor
+- **NPM:**
 - **Anggota 2:** Annisa Nur Fitriani
+- **NPM:**
 
 ## Informasi Mata Kuliah
 - **Mata Kuliah:** Pemrograman Berorientasi Objek 1
