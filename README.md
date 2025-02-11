@@ -1,205 +1,126 @@
-Sistem Rental PlayStation
-1. Gambaran Proyek
+🎮 Sistem Rental PlayStation
+📖 Deskripsi
+Sebuah aplikasi manajemen rental PlayStation berbasis JavaFX yang dikembangkan untuk memudahkan pengelolaan dan pemantauan penyewaan konsol game. Aplikasi ini menyediakan antarmuka yang user-friendly dan fitur-fitur komprehensif untuk manajemen rental PlayStation.
+✨ Fitur Utama
 
-Aplikasi rental PlayStation berbasis JavaFX
-Dikembangkan oleh kelompok 2
-Fokus pada manajemen rental konsol PlayStation dengan fitur:
+🔐 Sistem Autentikasi: Login multiuser dengan role admin dan user
+📊 Dashboard: Tampilan real-time status konsol dan penyewaan
+💻 Manajemen Konsol: Kelola inventaris PS3, PS4, dan PS5
+📝 Sistem Booking: Pencatatan dan pengelolaan penyewaan
+📈 Laporan: Generasi laporan penyewaan dan pendapatan
+🔄 Status Real-time: Pemantauan ketersediaan konsol secara real-time
 
-Pelacakan ketersediaan
-Pengelolaan penyewaan
-Pembuatan laporan
-
-
-
-2. Tim Pengembang
-
-Ketua: Luthfi Fathillah (NPM: 23552011209)
-Anggota 1: Lutfhi Febrian Noor
-Anggota 2: Annisa Nur Fitriani
-
-3. Informasi Akademik
+👥 Tim Pengembang
+NamaNPMRoleLuthfi Fathillah23552011209Ketua TimLutfhi Febrian Noor-AnggotaAnnisa Nur Fitriani-Anggota
+🎓 Informasi Akademik
 
 Mata Kuliah: Pemrograman Berorientasi Objek 1
 Dosen: Muhammad Ikhwan Fathulloh
+Semester: Ganjil 2023/2024
 
-4. Fitur Utama
+🛠️ Teknologi yang Digunakan
 
-Sistem Autentikasi Pengguna
-Manajemen Rental Konsol
-Pelacakan Ketersediaan Real-time
-Pembuatan Laporan Rental
-Dukungan Multi-konsol (PS3, PS4, PS5)
+Java SE Development Kit 8
+JavaFX untuk antarmuka pengguna
+MySQL untuk manajemen database
+Scene Builder untuk desain UI
+NetBeans IDE 12.0
 
-5. Implementasi OOP
-A. Pewarisan (Inheritance)
-
-Deskripsi:
-
-
-Menggunakan kelas dasar Console yang diturunkan ke kelas PS3, PS4, dan PS5
-Setiap kelas turunan mewarisi properti dan method umum dengan tarif per jam spesifik
-
-
-Contoh Kode dari Console.java:
-
+💻 Implementasi OOP
+1️⃣ Inheritance (Pewarisan)
 javaCopypublic abstract class Console {
     protected IntegerProperty hourlyRate;
     protected StringProperty type;
-    protected StringProperty room;
-    protected BooleanProperty isAvailable;
-    protected StringProperty rentedTo;
-    protected IntegerProperty rentedHours;
-    protected StringProperty rentedTime;
-
-    public Console(String type, int hourlyRate, String room) {
-        this.type = new SimpleStringProperty(type);
-        this.hourlyRate = new SimpleIntegerProperty(hourlyRate);
-        this.room = new SimpleStringProperty(room);
-        this.isAvailable = new SimpleBooleanProperty(true);
-        this.rentedTo = new SimpleStringProperty("");
-        this.rentedHours = new SimpleIntegerProperty(0);
-        this.rentedTime = new SimpleStringProperty("");
-    }
+    // ... kode lainnya
 }
 
-Contoh Kode Turunan dari PS4.java:
-
-javaCopypublic class PS4 extends Console {
+public class PS4 extends Console {
     public PS4(String room) {
-        super("PS4", 10000, room); // Mewarisi konstruktor dari kelas Console
+        super("PS4", 10000, room);
     }
-
-    @Override
-    public void calculateRentalCost() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    // ... kode lainnya
+}
+2️⃣ Encapsulation (Enkapsulasi)
+javaCopypublic class Console {
+    private IntegerProperty hourlyRate;
+    
+    public int getHourlyRate() { 
+        return hourlyRate.get(); 
     }
-
-    @Override
-    public void checkMaintenance() {
-        throw new UnsupportedOperationException("Not supported yet.");  
+    
+    public void setHourlyRate(int rate) {
+        this.hourlyRate.set(rate);
     }
 }
-B. Enkapsulasi (Encapsulation)
-
-Deskripsi:
-
-
-Menggunakan field private dan getter/setter publik
-Properti dilindungi dengan metode properti JavaFX
-Operasi database dienkapsulasi dalam handler terpisah
-
-
-Contoh Kode dari Console.java:
-
-javaCopypublic abstract class Console {
-    protected IntegerProperty hourlyRate;
-    protected StringProperty type;
-    
-    // Getters
-    public int getHourlyRate() { return hourlyRate.get(); }
-    public String getType() { return type.get(); }
-    
-    // Property methods
-    public IntegerProperty hourlyRateProperty() { return hourlyRate; }
-    public StringProperty typeProperty() { return type; }
-    
-    // Setters 
-    public void setAvailable(boolean available) { 
-        this.isAvailable.set(available); 
-    }
-    
-    public void setRentedTo(String customer) {
-        this.rentedTo.set(customer);
-    }
-}
-C. Polimorfisme (Polymorphism)
-
-Deskripsi:
-
-
-Variable Console dapat menyimpan berbagai objek turunan
-Memungkinkan penanganan fleksibel berbagai jenis PlayStation
-
-
-Contoh Kode dari RentalOperations.java:
-
+3️⃣ Polymorphism (Polimorfisme)
 javaCopypublic List<Console> getAllConsoles() {
     List<Console> consoles = new ArrayList<>();
-    String query = "SELECT * FROM consoles";
-    try (Statement stmt = connection.createStatement();
-         ResultSet rs = stmt.executeQuery(query)) {
-
-        while (rs.next()) {
-            Console console;
-            String type = rs.getString("type");
-            String room = rs.getString("room");
-            
-            switch (type) {
-                case "PS3":
-                    console = new PS3(room);
-                    break;
-                case "PS4":
-                    console = new PS4(room);
-                    break;
-                case "PS5":
-                    console = new PS5(room);
-                    break;
-                default:
-                    continue;
-            }
-            consoles.add(console);
-        }
+    // ... kode implementasi
+    Console console;
+    switch (type) {
+        case "PS3": console = new PS3(room); break;
+        case "PS4": console = new PS4(room); break;
+        case "PS5": console = new PS5(room); break;
     }
-    return consoles;
 }
-D. Abstraksi (Abstraction)
-
-Deskripsi:
-
-
-Kelas Console sebagai template abstrak
-Memiliki method abstrak yang harus diimplementasikan oleh kelas turunan
-Menggunakan desain berbasis antarmuka untuk operasi rental
-
-
-Contoh Kode dari Console.java:
-
+4️⃣ Abstraction (Abstraksi)
 javaCopypublic abstract class Console {
-    // Abstract methods
     public abstract void calculateRentalCost();
     public abstract void checkMaintenance();
-    
-    // Concrete methods
-    public void setRentedTime(String time) {
-        this.rentedTime.set(time);
-    }
-    
-    public void setRentedHours(int hours) {
-        this.rentedHours.set(hours);
-    }
 }
+📥 Instalasi dan Penggunaan
+Prasyarat
+bashCopy- JDK 8 atau lebih tinggi
+- MySQL Server
+- NetBeans IDE (disarankan)
+Langkah Instalasi
 
-Contoh Implementasi Abstraksi dalam RentalOperations.java:
+Clone repository
 
-javaCopypublic class RentalOperations {
-    public void rentConsole(String customerName, String room, int hours) {
-        try {
-            connection.setAutoCommit(false);
-            String consoleQuery = "UPDATE consoles SET " +
-                "is_available = FALSE, " +
-                "rented_to = ?, " +
-                "rented_hours = ?, " +
-                "rented_time = ? " +
-                "WHERE room = ?";
-            
-            // Implementation details hidden
-            connection.commit();
-        } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException rollbackEx) {
-                rollbackEx.printStackTrace();
-            }
-        }
-    }
-}
+bashCopygit clone https://github.com/username/rental-playstation.git
+
+Import database
+
+bashCopymysql -u username -p rental_ps < database/rental_ps.sql
+
+Konfigurasi database di src/main/java/com/mycompany/rental_playstation/DatabaseConnection.java
+
+javaCopyprivate static final String URL = "jdbc:mysql://localhost:3306/rental_ps";
+private static final String USER = "username_anda";
+private static final String PASSWORD = "password_anda";
+
+Build dan jalankan aplikasi
+
+bashCopycd rental-playstation
+mvn clean install
+java -jar target/rental-playstation-1.0.jar
+📸 Screenshot Aplikasi
+<p align="center">
+  <img src="screenshots/login.png" alt="Login Screen" width="200"/>
+  <img src="screenshots/dashboard.png" alt="Dashboard" width="200"/>
+  <img src="screenshots/rental.png" alt="Rental Management" width="200"/>
+</p>
+📊 Struktur Database
+Show Image
+🤝 Kontribusi
+Kontribusi selalu disambut baik! Silakan ikuti langkah-langkah berikut:
+
+Fork repository
+Buat branch baru (git checkout -b fitur-baru)
+Commit perubahan (git commit -m 'Menambahkan fitur baru')
+Push ke branch (git push origin fitur-baru)
+Buat Pull Request
+
+📝 Lisensi
+Proyek ini dilisensikan di bawah [Nama Lisensi] - lihat file LICENSE.md untuk detail.
+🙏 Ucapan Terima Kasih
+
+Bapak Muhammad Ikhwan Fathulloh selaku dosen pembimbing
+Tim pengembang atas dedikasi dan kerja kerasnya
+Semua pihak yang telah membantu dalam pengembangan proyek ini
+
+📞 Kontak
+
+Email: email@example.com
+Website: https://www.example.com
+LinkedIn: Your LinkedIn
