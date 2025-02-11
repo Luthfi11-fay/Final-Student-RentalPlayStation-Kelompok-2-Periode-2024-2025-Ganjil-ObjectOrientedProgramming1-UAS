@@ -178,7 +178,7 @@ public class RentalOperations {
 ### Langkah Instalasi
 1. Clone repository
 ```bash
-git clone https://github.com/username/rental-playstation.git
+git clone https://github.com/Luthfi11-fay/Final-Student-RentalPlayStation-Kelompok-2-Periode-2024-2025-Ganjil-ObjectOrientedProgramming1-UAS/tree/master
 ```
 
 2. Import database
