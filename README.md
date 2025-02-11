@@ -200,26 +200,6 @@ mvn clean install
 java -jar target/rental-playstation-1.0.jar
 ```
 
-## 📸 Screenshot Aplikasi
-<p align="center">
-  <img src="screenshots/login.png" alt="Login Screen" width="200"/>
-  <img src="screenshots/dashboard.png" alt="Dashboard" width="200"/>
-  <img src="screenshots/rental.png" alt="Rental Management" width="200"/>
-</p>
-
-## 📊 Struktur Database
-![Database Structure](path_to_database_structure_image.png)
-
-## 🤝 Kontribusi
-Kontribusi selalu disambut baik! Silakan ikuti langkah-langkah berikut:
-1. Fork repository
-2. Buat branch baru (`git checkout -b fitur-baru`)
-3. Commit perubahan (`git commit -m 'Menambahkan fitur baru'`)
-4. Push ke branch (`git push origin fitur-baru`)
-5. Buat Pull Request
-
-## 📝 Lisensi
-Proyek ini dilisensikan di bawah [Nama Lisensi] - lihat file [LICENSE.md](LICENSE.md) untuk detail.
 
 ## 🙏 Ucapan Terima Kasih
 - Bapak Muhammad Ikhwan Fathulloh selaku dosen pembimbing
