@@ -16,8 +16,8 @@ Sebuah aplikasi manajemen rental PlayStation berbasis JavaFX yang dikembangkan u
 | Nama | NPM | Role |
 |------|-----|------|
 | Luthfi Fathillah | 23552011209 | Ketua Tim |
-| Lutfhi Febrian Noor | - | Anggota |
-| Annisa Nur Fitriani | - | Anggota |
+| Lutfhi Febrian Noor | 23552011363 | Anggota |
+| Annisa Nur Fitriani | 23552011192 | Anggota |
 
 ## 🎓 Informasi Akademik
 - **Mata Kuliah**: Pemrograman Berorientasi Objek 1
