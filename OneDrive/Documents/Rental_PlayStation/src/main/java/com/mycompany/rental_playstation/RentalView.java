@@ -1,14 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.rental_playstation;
-
-/**
- *
- * @author user
- */
-
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,6 +10,8 @@ import javafx.scene.text.Text;
 import javafx.collections.FXCollections;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.time.LocalDate;
 
 public class RentalView {
     private RentalOperations rentalOps;
@@ -30,8 +22,17 @@ public class RentalView {
     private TextField hoursField;
     private Label selectedConsoleLabel;
     private Console selectedConsole;
+    private ComboBox<String> consoleTypeFilter;
+    private DatePicker startDatePicker;
+    private DatePicker endDatePicker;
+    private User currentUser;
 
     public RentalView() {
+        this(null);
+    }
+
+    public RentalView(User user) {
+        this.currentUser = user;
         try {
             rentalOps = new RentalOperations();
         } catch (SQLException e) {
@@ -40,19 +41,32 @@ public class RentalView {
     }
 
     public VBox getView() {
+        // Cek apakah user memiliki akses admin
+        if (currentUser == null || !"ADMIN".equals(currentUser.getRole())) {
+            VBox deniedContainer = new VBox(20);
+            deniedContainer.setAlignment(Pos.CENTER);
+            deniedContainer.setPadding(new Insets(20));
+            
+            Label deniedLabel = new Label("Access Denied");
+            deniedLabel.setStyle("-fx-font-size: 24px; -fx-text-fill: red;");
+            
+            Label detailLabel = new Label("This page requires administrator privileges.");
+            detailLabel.setStyle("-fx-font-size: 16px;");
+            
+            deniedContainer.getChildren().addAll(deniedLabel, detailLabel);
+            return deniedContainer;
+        }
+
         VBox mainContainer = new VBox(20);
         mainContainer.setPadding(new Insets(20));
         mainContainer.setAlignment(Pos.CENTER);
 
-        // Header
         Text headerText = new Text("PlayStation Rental Management");
         headerText.setFont(Font.font("System", FontWeight.BOLD, 20));
 
-        // Create main sections
         VBox rentalSection = createRentalSection();
         VBox reportSection = createReportSection();
 
-        // Add all components to main container
         mainContainer.getChildren().addAll(
             headerText,
             new Separator(),
@@ -61,16 +75,12 @@ public class RentalView {
             reportSection
         );
 
-        // Initial table refresh
-        try {
-            refreshTables();
-        } catch (Exception e) {
-            showError("Error", "Failed to load initial data: " + e.getMessage());
-        }
+        refreshTables();
 
         return mainContainer;
     }
 
+    
     private VBox createRentalSection() {
         VBox section = new VBox(15);
         section.setPadding(new Insets(10));
@@ -78,19 +88,96 @@ public class RentalView {
         Text sectionTitle = new Text("Console Rentals");
         sectionTitle.setFont(Font.font("System", FontWeight.BOLD, 16));
 
-        // Console table with fixed column widths
         consoleTable = createConsoleTable();
         VBox.setVgrow(consoleTable, Priority.ALWAYS);
         
-        // Rental form in a styled pane
         GridPane rentalForm = createRentalForm();
-        rentalForm.setStyle("-fx-background-color: #f5f5f5; -fx-padding: 10px; -fx-border-color: #ddd; -fx-border-radius: 5px;");
+        rentalForm.setStyle("-fx-background-color: #f5f5f5; -fx-padding: 10px;");
 
-        // Action buttons
         HBox buttonBox = createActionButtons();
 
-        section.getChildren().addAll(sectionTitle, consoleTable, rentalForm, buttonBox);
+        section.getChildren().addAll(
+            sectionTitle, 
+            consoleTable, 
+            rentalForm, 
+            buttonBox
+        );
         return section;
+    }
+
+    private VBox createReportSection() {
+        VBox section = new VBox(15);
+        section.setPadding(new Insets(10));
+
+        Text sectionTitle = new Text("Rental Reports");
+        sectionTitle.setFont(Font.font("System", FontWeight.BOLD, 16));
+
+        HBox filterBox = createReportFilterBox();
+        reportTable = createReportTable();
+        VBox.setVgrow(reportTable, Priority.ALWAYS);
+
+        section.getChildren().addAll(
+            sectionTitle, 
+            filterBox, 
+            reportTable
+        );
+        return section;
+    }
+
+    private HBox createReportFilterBox() {
+        HBox filterBox = new HBox(10);
+    filterBox.setAlignment(Pos.CENTER_LEFT);
+    filterBox.setPadding(new Insets(10.0, 0.0, 10.0, 0.0));
+    
+        consoleTypeFilter = new ComboBox<>();
+        consoleTypeFilter.getItems().addAll("All", "PS3", "PS4", "PS5");
+        consoleTypeFilter.setValue("All");
+        consoleTypeFilter.setOnAction(e -> applyReportFilter());
+
+        startDatePicker = new DatePicker();
+        startDatePicker.setPromptText("Start Date");
+        startDatePicker.setOnAction(e -> applyReportFilter());
+
+        endDatePicker = new DatePicker();
+        endDatePicker.setPromptText("End Date");
+        endDatePicker.setOnAction(e -> applyReportFilter());
+
+        filterBox.getChildren().addAll(
+            new Label("Console Type:"), 
+            consoleTypeFilter, 
+            new Label("From:"), 
+            startDatePicker, 
+            new Label("To:"), 
+            endDatePicker
+        );
+
+        return filterBox;
+    }
+
+    private void applyReportFilter() {
+        List<RentalReport> allReports = rentalOps.getRentalReports();
+        
+        List<RentalReport> filteredReports = allReports.stream()
+            .filter(report -> {
+                boolean consoleTypeMatch = consoleTypeFilter.getValue().equals("All") || 
+                    report.getConsoleType().equals(consoleTypeFilter.getValue());
+                
+                LocalDate reportDate = LocalDate.parse(report.getDate());
+                boolean dateRangeMatch = true;
+                
+                if (startDatePicker.getValue() != null) {
+                    dateRangeMatch = dateRangeMatch && !reportDate.isBefore(startDatePicker.getValue());
+                }
+                
+                if (endDatePicker.getValue() != null) {
+                    dateRangeMatch = dateRangeMatch && !reportDate.isAfter(endDatePicker.getValue());
+                }
+                
+                return consoleTypeMatch && dateRangeMatch;
+            })
+            .collect(Collectors.toList());
+
+        reportTable.setItems(FXCollections.observableArrayList(filteredReports));
     }
 
     private TableView<Console> createConsoleTable() {
@@ -99,21 +186,19 @@ public class RentalView {
 
         TableColumn<Console, String> typeColumn = new TableColumn<>("Type");
         typeColumn.setCellValueFactory(data -> data.getValue().typeProperty());
-        typeColumn.setPrefWidth(100);
 
         TableColumn<Console, String> roomColumn = new TableColumn<>("Room");
         roomColumn.setCellValueFactory(data -> data.getValue().roomProperty());
-        roomColumn.setPrefWidth(100);
 
-        TableColumn<Console, Boolean> availableColumn = new TableColumn<>("Available");
+        TableColumn<Console, Boolean> availableColumn = new TableColumn<>("Status");
         availableColumn.setCellValueFactory(data -> data.getValue().isAvailableProperty());
-        availableColumn.setPrefWidth(100);
         availableColumn.setCellFactory(col -> new TableCell<Console, Boolean>() {
             @Override
             protected void updateItem(Boolean item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty || item == null) {
                     setText(null);
+                    setStyle("");
                 } else {
                     setText(item ? "Available" : "Rented");
                     setStyle(item ? "-fx-text-fill: green;" : "-fx-text-fill: red;");
@@ -123,21 +208,13 @@ public class RentalView {
 
         TableColumn<Console, String> rentedToColumn = new TableColumn<>("Rented To");
         rentedToColumn.setCellValueFactory(data -> data.getValue().rentedToProperty());
-        rentedToColumn.setPrefWidth(150);
 
         TableColumn<Console, Number> hoursColumn = new TableColumn<>("Hours");
         hoursColumn.setCellValueFactory(data -> data.getValue().rentedHoursProperty());
-        hoursColumn.setPrefWidth(100);
 
-        TableColumn<Console, String> timeColumn = new TableColumn<>("Rental Time");
-        timeColumn.setCellValueFactory(data -> data.getValue().rentedTimeProperty());
-        timeColumn.setPrefWidth(150);
-
-        table.getColumns().addAll(typeColumn, roomColumn, availableColumn, 
-                                rentedToColumn, hoursColumn, timeColumn);
-
+        table.getColumns().addAll(typeColumn, roomColumn, availableColumn, rentedToColumn, hoursColumn);
         table.setMinHeight(200);
-        table.setMaxHeight(400);
+        table.setMaxHeight(300);
 
         table.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             selectedConsole = newVal;
@@ -146,6 +223,42 @@ public class RentalView {
                 roomField.setText(newVal.getRoom());
             }
         });
+
+        return table;
+    }
+
+    private TableView<RentalReport> createReportTable() {
+        TableView<RentalReport> table = new TableView<>();
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        TableColumn<RentalReport, String> dateColumn = new TableColumn<>("Date");
+        dateColumn.setCellValueFactory(data -> data.getValue().dateProperty());
+
+        TableColumn<RentalReport, String> consoleColumn = new TableColumn<>("Console");
+        consoleColumn.setCellValueFactory(data -> data.getValue().consoleTypeProperty());
+
+        TableColumn<RentalReport, String> customerColumn = new TableColumn<>("Customer");
+        customerColumn.setCellValueFactory(data -> data.getValue().customerNameProperty());
+
+        TableColumn<RentalReport, Number> hoursColumn = new TableColumn<>("Hours");
+        hoursColumn.setCellValueFactory(data -> data.getValue().totalHoursProperty());
+
+        TableColumn<RentalReport, Number> revenueColumn = new TableColumn<>("Revenue");
+        revenueColumn.setCellValueFactory(data -> data.getValue().revenueProperty());
+        revenueColumn.setCellFactory(col -> new TableCell<RentalReport, Number>() {
+            @Override
+            protected void updateItem(Number item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(String.format("Rp. %.2f", item.doubleValue()));
+                }
+            }
+        });
+
+        table.getColumns().addAll(dateColumn, consoleColumn, customerColumn, hoursColumn, revenueColumn);
+        table.setMinHeight(200);
 
         return table;
     }
@@ -178,17 +291,6 @@ public class RentalView {
         hoursField = new TextField();
         hoursField.setPromptText("Enter rental hours");
         addFormRow(form, "Hours:", hoursField, 3);
-
-        // Set column constraints for better layout
-        ColumnConstraints labelColumn = new ColumnConstraints();
-        labelColumn.setHgrow(Priority.NEVER);
-        labelColumn.setMinWidth(100);
-        
-        ColumnConstraints fieldColumn = new ColumnConstraints();
-        fieldColumn.setHgrow(Priority.ALWAYS);
-        fieldColumn.setMinWidth(200);
-        
-        form.getColumnConstraints().addAll(labelColumn, fieldColumn);
 
         return form;
     }
@@ -227,46 +329,6 @@ public class RentalView {
         ));
         button.setMinWidth(120);
         return button;
-    }
-
-    private VBox createReportSection() {
-        VBox section = new VBox(15);
-        section.setPadding(new Insets(10));
-
-        Text sectionTitle = new Text("Rental Reports");
-        sectionTitle.setFont(Font.font("System", FontWeight.BOLD, 16));
-
-        reportTable = createReportTable();
-        VBox.setVgrow(reportTable, Priority.ALWAYS);
-
-        section.getChildren().addAll(sectionTitle, reportTable);
-        return section;
-    }
-
-    private TableView<RentalReport> createReportTable() {
-        TableView<RentalReport> table = new TableView<>();
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-        TableColumn<RentalReport, String> dateColumn = new TableColumn<>("Date");
-        dateColumn.setCellValueFactory(data -> data.getValue().dateProperty());
-        dateColumn.setPrefWidth(150);
-
-        TableColumn<RentalReport, String> consoleColumn = new TableColumn<>("Console Type");
-        consoleColumn.setCellValueFactory(data -> data.getValue().consoleTypeProperty());
-        consoleColumn.setPrefWidth(100);
-
-        TableColumn<RentalReport, Number> hoursColumn = new TableColumn<>("Total Hours");
-        hoursColumn.setCellValueFactory(data -> data.getValue().totalHoursProperty());
-        hoursColumn.setPrefWidth(100);
-
-        TableColumn<RentalReport, Number> revenueColumn = new TableColumn<>("Revenue");
-        revenueColumn.setCellValueFactory(data -> data.getValue().revenueProperty());
-        revenueColumn.setPrefWidth(150);
-
-        table.getColumns().addAll(dateColumn, consoleColumn, hoursColumn, revenueColumn);
-        table.setMinHeight(200);
-
-        return table;
     }
 
     private void handleRentConsole() {
@@ -313,6 +375,9 @@ public class RentalView {
         try {
             List<Console> consoles = rentalOps.getAllConsoles();
             consoleTable.setItems(FXCollections.observableArrayList(consoles));
+
+            List<RentalReport> reports = rentalOps.getRentalReports();
+            reportTable.setItems(FXCollections.observableArrayList(reports));
         } catch (Exception e) {
             showError("Error", "Failed to refresh data: " + e.getMessage());
         }
