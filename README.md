@@ -1,4 +1,4 @@
-** Sistem Rental PlayStation **
+Sistem Rental PlayStation
 1. Gambaran Proyek
 
 Aplikasi rental PlayStation berbasis JavaFX
@@ -76,7 +76,7 @@ javaCopypublic class PS4 extends Console {
 
     @Override
     public void checkMaintenance() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Not supported yet.");  
     }
 }
 B. Enkapsulasi (Encapsulation)
@@ -103,7 +103,7 @@ javaCopypublic abstract class Console {
     public IntegerProperty hourlyRateProperty() { return hourlyRate; }
     public StringProperty typeProperty() { return type; }
     
-    // Setters
+    // Setters 
     public void setAvailable(boolean available) { 
         this.isAvailable.set(available); 
     }
@@ -203,4 +203,3 @@ javaCopypublic class RentalOperations {
         }
     }
 }
-Proyek ini menunjukkan implementasi yang komprehensif dari prinsip-prinsip OOP dalam pengembangan sistem manajemen rental PlayStation.
