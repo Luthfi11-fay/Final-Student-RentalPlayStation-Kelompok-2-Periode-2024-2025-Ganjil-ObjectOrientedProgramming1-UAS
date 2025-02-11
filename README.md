@@ -1,4 +1,4 @@
-Sistem Rental PlayStation
+** Sistem Rental PlayStation **
 1. Gambaran Proyek
 
 Aplikasi rental PlayStation berbasis JavaFX
